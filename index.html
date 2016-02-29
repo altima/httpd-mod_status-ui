@@ -1,0 +1,135 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>httpd status</title>
+    <meta name="description" content="Apache httpd mod_status async UI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="secretwpn">
+    <link rel="stylesheet" href="status-res/css/normalize.css">
+    <link rel="stylesheet" href="status-res/css/bootstrap.min.css">
+    <link rel="stylesheet" href="status-res/css/main.css">
+    <script src="status-res/js/vendor/modernizr-2.8.3.min.js"></script>
+    <script src="status-res/js/vendor/jquery-1.12.0.min.js"></script>
+    <script src="status-res/js/vendor/bootstrap.min.js"></script>
+    <script src="status-res/js/vendor/jquery.canvasjs.min.js"></script>
+</head>
+<body>
+<!-- Take a look at js/config.js file for initial settings -->
+<!-- Main logic that you might want to tweak is in js/main.js file -->
+<div class="container">
+    <!-- Title -->
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span></h1>
+            <h2 style="margin-top:0.2em">httpd status monitor</h2>
+        </div>
+    </div>
+
+    <!-- No connection alert -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="NoConnectionAlert" class="alert alert-danger ui-hidden">
+                No connection <span id="NoConnectionTime"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- General data -->
+    <div class="row">
+        <div class="col-md-12">
+            <h1 id="serverName" class="text-center"></h1>
+            <div class="row">
+                <div class="col-sm-2 col-sm-offset text-center">
+                    <h3>
+                        <small><span class="glyphicon glyphicon-time"></span> Uptime</small>
+                        <br>
+                        <span id="Uptime"></span>
+                    </h3>
+                </div>
+                <div class="col-sm-2 col-sm-offset text-center">
+                    <h3>
+                        <small><span class="glyphicon glyphicon-flash"></span> Total threads</small>
+                        <br>
+                        <span id="TotalThreads"></span>
+                    </h3>
+                </div>
+                <div class="col-md-2 text-center">
+                    <h3>
+                        <small><span class="glyphicon glyphicon-refresh"></span> Total accesses</small>
+                        <br>
+                        <span id="TotalAccesses"></span>
+                    </h3>
+                </div>
+                <div class="col-md-2 text-center">
+                    <h3>
+                        <small><span class="glyphicon glyphicon-download"></span> Total traffic</small>
+                        <br>
+                        <span id="TotalkBytes"></span>
+                    </h3>
+                </div>
+                <div class="col-md-2 text-center">
+                    <h3>
+                        <small><span class="glyphicon glyphicon-stats"></span> Data/sec.</small>
+                        <br>
+                        <span id="BytesPerSec"></span>
+                    </h3>
+                </div>
+                <div class="col-md-2 text-center">
+                    <h3>
+                        <small><span class="glyphicon glyphicon-transfer"></span> Requests/sec.</small>
+                        <br>
+                        <span id="ReqPerSec"></span>
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <!-- Charts -->
+    <div class="row">
+        <div class="col-sm-3">
+            <div id="chart-workers" style="height: 300px; width: 100%;">
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <div id="chart-workers-trend" style="height: 300px; width: 100%;">
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top:3em">
+        <div class="col-sm-12">
+            <div id="chart-scores" style="height: 350px; width: 100%;">
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <!-- Settings -->
+    <div class="row text-center">
+        <button id="settingsButton" type="button" class="btn btn-default btn-sm">Settings</button>
+    </div>
+    <br>
+    <div id="settings" class="row ui-hidden">
+        <div class="col-sm-offset-5 col-sm-2 text-center">
+            <div class="form-group text-left">
+                <label id="settingsRefreshTextLabel" for="settingsRefreshText">Refresh interval, ms</label>
+                <input id="settingsRefreshText" type="text" class="form-control">
+            </div>
+            <div class="form-group text-left">
+                <label id="settingsTimeWindowLabel" for="settingsTimeWindowText">Time window, sec</label>
+                <input id="settingsTimeWindowText" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <button id="settingsApplyButton" class="btn btn-primary" type="button">Apply</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="status-res/js/plugins.js"></script>
+<script src="status-res/js/config.js"></script>
+<script src="status-res/js/main.js"></script>
+</body>
+</html>
