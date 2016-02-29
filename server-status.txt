@@ -1,4 +1,4 @@
-Total Accesses: 18148534
+Total Accesses: 1860000
 Total kBytes: 3623034
 Uptime: 58042
 ReqPerSec: 312.679

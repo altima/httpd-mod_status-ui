@@ -289,7 +289,13 @@ function updateWorkers(data) {
  */
 function updateGeneralData(data) {
     try {
-        $('#TotalAccesses').html((parseInt(data.TotalAccesses) / 1000).toFixed(0) + 'M');
+        var totalAccesses = parseInt(data.TotalAccesses);
+        if (totalAccesses > 1000000)
+            $('#TotalAccesses').html((totalAccesses / 1000000).toFixed(0) + 'M');
+        else if (totalAccesses > 1000)
+            $('#TotalAccesses').html((totalAccesses / 1000).toFixed(0) + 'K');
+        else
+            $('#TotalAccesses').html(totalAccesses);
         $('#TotalkBytes').html(formatSizeUnits(parseInt(data.TotalkBytes) * 1024));
         $('#BytesPerSec').html(formatSizeUnits(parseInt(data.BytesPerSec)));
         $('#ReqPerSec').html(parseInt(data.ReqPerSec));
