@@ -13,7 +13,7 @@ var maxDataPoints = 100;
 var chartWorkers, chartWorkersTrend, chartScores;
 var disconnectedStartTime = null;
 $(function () {
-    chartScores = createScoreBoard();
+    chartScores = createScoreboard();
     chartWorkers = createWorkersChart();
     chartWorkersTrend = createWorkersTrendChart();
     createSettingsUI();
@@ -45,24 +45,101 @@ function createSettingsUI() {
  *
  * @returns {Ba.Chart} chart object
  */
-function createScoreBoard() {
+function createScoreboard() {
+    CanvasJS.addColorSet("colors", scoreboardColors);
     return new CanvasJS.Chart("chart-scores",
         {
+            colorSet: "colors",
+            dataPointWidth: 50,
             data: [
                 {
                     fillOpacity: .8,
-                    type: "column",
+                    type: "stackedBar",
+                    name: "Waiting",
+                    showInLegend: true,
                     dataPoints: [
-                        {y: 0, label: "Waiting for connection"},
-                        {y: 0, label: "Starting up"},
-                        {y: 0, label: "Reading Request"},
-                        {y: 0, label: "Sending Reply"},
-                        {y: 0, label: "Keepalive (read)"},
-                        {y: 0, label: "DNS Lookup"},
-                        {y: 0, label: "Closing connection"},
-                        {y: 0, label: "Logging"},
-                        {y: 0, label: "Gracefully finishing"},
-                        {y: 0, label: "Idle cleanup of worker"}
+                        {x: 0, label: "Waiting for connection"}
+                    ]
+                },
+                {
+                    fillOpacity: .8,
+                    type: "stackedBar",
+                    name: "Starting",
+                    showInLegend: true,
+                    dataPoints: [
+                        {x: 0, label: "Starting up"}
+                    ]
+                },
+                {
+                    fillOpacity: .8,
+                    type: "stackedBar",
+                    name: "Reading",
+                    showInLegend: true,
+                    dataPoints: [
+                        {x: 0, label: "Reading Request"}
+                    ]
+                },
+                {
+                    fillOpacity: .8,
+                    type: "stackedBar",
+                    name: "Sending Reply",
+                    showInLegend: true,
+                    dataPoints: [
+                        {x: 0, label: "Sending Reply"}
+                    ]
+                },
+                {
+                    fillOpacity: .8,
+                    type: "stackedBar",
+                    name: "Keepalive",
+                    showInLegend: true,
+                    dataPoints: [
+                        {x: 0, label: "Keepalive (read)"}
+                    ]
+                },
+                {
+                    fillOpacity: .8,
+                    type: "stackedBar",
+                    name: "DNS Lookup",
+                    showInLegend: true,
+                    dataPoints: [
+                        {x: 0, label: "DNS Lookup"}
+                    ]
+                },
+                {
+                    fillOpacity: .8,
+                    type: "stackedBar",
+                    name: "Closing",
+                    showInLegend: true,
+                    dataPoints: [
+                        {x: 0, label: "Closing connection"}
+                    ]
+                },
+                {
+                    fillOpacity: .8,
+                    type: "stackedBar",
+                    name: "Logging",
+                    showInLegend: true,
+                    dataPoints: [
+                        {x: 0, label: "Logging"}
+                    ]
+                },
+                {
+                    fillOpacity: .8,
+                    type: "stackedBar",
+                    name: "Finishing",
+                    showInLegend: true,
+                    dataPoints: [
+                        {x: 0, label: "Gracefully finishing"}
+                    ]
+                },
+                {
+                    fillOpacity: .8,
+                    type: "stackedBar",
+                    name: "Cleanup",
+                    showInLegend: true,
+                    dataPoints: [
+                        {x: 0, label: "Idle cleanup of worker"}
                     ]
                 }
             ],
@@ -71,10 +148,12 @@ function createScoreBoard() {
                 fontSize: 12
             },
             axisX: {
-                labelAngle: 45,
-                labelFontSize: 14
+                labelAngle: 90,
+                labelFontSize: 1,
+                labelFontColor: '#FFFFFF'
             },
             axisY: {
+                labelFontSize: 14,
                 maximum: totalWorkers,
                 gridThickness: 1,
                 gridColor: '#EEE'
@@ -90,6 +169,7 @@ function createScoreBoard() {
 function createWorkersChart() {
     return new CanvasJS.Chart("chart-workers", {
         animationEnabled: true,
+        dataPointWidth: 50,
         data: [
             {
                 fillOpacity: .8,
@@ -314,15 +394,15 @@ function updateGeneralData(data) {
 function updateScoreboard(data) {
     try {
         chartScores.options.data[0].dataPoints[0].y = data.replace(/[^_]/g, '').length;
-        chartScores.options.data[0].dataPoints[1].y = data.replace(/[^S]/g, '').length;
-        chartScores.options.data[0].dataPoints[2].y = data.replace(/[^R]/g, '').length;
-        chartScores.options.data[0].dataPoints[3].y = data.replace(/[^W]/g, '').length;
-        chartScores.options.data[0].dataPoints[4].y = data.replace(/[^K]/g, '').length;
-        chartScores.options.data[0].dataPoints[5].y = data.replace(/[^D]/g, '').length;
-        chartScores.options.data[0].dataPoints[6].y = data.replace(/[^C]/g, '').length;
-        chartScores.options.data[0].dataPoints[7].y = data.replace(/[^L]/g, '').length;
-        chartScores.options.data[0].dataPoints[8].y = data.replace(/[^G]/g, '').length;
-        chartScores.options.data[0].dataPoints[9].y = data.replace(/[^I]/g, '').length;
+        chartScores.options.data[1].dataPoints[0].y = data.replace(/[^S]/g, '').length;
+        chartScores.options.data[2].dataPoints[0].y = data.replace(/[^R]/g, '').length;
+        chartScores.options.data[3].dataPoints[0].y = data.replace(/[^W]/g, '').length;
+        chartScores.options.data[4].dataPoints[0].y = data.replace(/[^K]/g, '').length;
+        chartScores.options.data[5].dataPoints[0].y = data.replace(/[^D]/g, '').length;
+        chartScores.options.data[6].dataPoints[0].y = data.replace(/[^C]/g, '').length;
+        chartScores.options.data[7].dataPoints[0].y = data.replace(/[^L]/g, '').length;
+        chartScores.options.data[8].dataPoints[0].y = data.replace(/[^G]/g, '').length;
+        chartScores.options.data[9].dataPoints[0].y = data.replace(/[^I]/g, '').length;
         chartScores.render();
     } catch (e) {
         log('Failed to update scoreboard', e);
